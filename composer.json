@@ -15,7 +15,6 @@
     "extra": {
         "laravel": {
             "providers": [
-                "Modules\\Helpcenter\\Providers\\HelpcenterServiceProvider"
             ],
             "aliases": {
 

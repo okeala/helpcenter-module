@@ -19,7 +19,7 @@ return new class extends Migration {
             // Auteur optionnel (Person), null si supprimé
             $table->foreignId('author_id')
                 ->nullable()
-                ->constrained('people')
+                ->constrained('users')
                 ->nullOnDelete();
 
             $table->timestamps();

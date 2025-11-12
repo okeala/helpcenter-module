@@ -1,0 +1,11 @@
+{
+    "name": "Helpcenter",
+    "alias": "helpcenter",
+    "description": "",
+    "keywords": [],
+    "priority": 0,
+    "providers": [
+        "Modules\\Helpcenter\\Providers\\HelpcenterServiceProvider"
+    ],
+    "files": []
+}

@@ -4,37 +4,55 @@ namespace Modules\Helpcenter\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\Relations\BelongsTo;
-use Modules\Helpcenter\Database\Factories\AddressFactory;
 use Modules\People\Models\Person;
-use MatanYadaev\EloquentSpatial\Traits\HasSpatial;
-use MatanYadaev\EloquentSpatial\Objects\Point;
+use Spatie\Translatable\HasTranslations;
 
 class Faq extends Model
 {
-    use HasSpatial;
     use HasFactory;
+    use HasTranslations;
+
+    protected $table = 'faqs';
 
     protected $fillable = [
-        'person_id',
-        'line1','line2','city','region','postal_code','country_code',
-        'location'
-        // 'location' est géré via cast Point
+        'question',
+        'answer',
+        'is_published',
+        'published_at',
+        'author_id',
+    ];
+
+    protected array $translatable = [
+        'question',
+        'answer',
     ];
 
     protected $casts = [
-        'location' => Point::class,
-        'lat' => 'float',
-        'lng' => 'float',
+        'is_published' => 'bool',
+        'published_at' => 'datetime',
     ];
 
-    public function person(): BelongsTo
+    /**
+     * Auteur de la FAQ (Person).
+     */
+    public function author()
     {
-        return $this->belongsTo(Person::class, 'person_id');
+        return $this->belongsTo(Person::class, 'author_id');
     }
 
-    protected static function newFactory(): AddressFactory
+    /**
+     * Tags polymorphiques.
+     */
+    public function tags()
     {
-        return AddressFactory::new();
+        return $this->morphToMany(Tag::class, 'taggable');
+    }
+
+    /**
+     * Lier la factory au modèle (important pour les modules).
+     */
+    protected static function newFactory()
+    {
+        return \Modules\Helpcenter\Database\Factories\FaqFactory::new();
     }
 }

@@ -15,6 +15,7 @@
     "extra": {
         "laravel": {
             "providers": [
+                "Modules\\Helpcenter\\Providers\\RouteServiceProvider"
             ],
             "aliases": {
 
